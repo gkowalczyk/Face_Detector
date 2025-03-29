@@ -25,7 +25,26 @@ const FaceResult = ({faceData}) => {
                     <p><strong>Włosy niewidoczne:</strong> {face.faceAttributes.hair.invisible ? 'Tak' : 'Nie'}</p>
 
                     <h4>🧔 Zarost:</h4>
+                    <p><strong>Wąsy:</strong> {(face.faceAttributes.facialHair.moustache * 100).toFixed(0)}%</p>
+                    <p><strong>Broda:</strong> {(face.faceAttributes.facialHair.beard * 100).toFixed(0)}%</p>
+                    <p><strong>Baki:</strong> {(face.faceAttributes.facialHair.sideburns * 100).toFixed(0)}%</p>
 
+                    <h4>💄 Makijaż:</h4>
+                    <p><strong>Oczy:</strong> {face.faceAttributes.makeup.eyeMakeup ? 'Tak' : 'Nie'}</p>
+                    <p><strong>Usta:</strong> {face.faceAttributes.makeup.lipMakeup ? 'Tak' : 'Nie'}</p>
+
+                    <h4>📸 Jakość i ekspozycja:</h4>
+                    <p><strong>Rozmycie:</strong> {face.faceAttributes.blur.blurLevel} ({(face.faceAttributes.blur.value * 100).toFixed(0)}%)</p>
+                    <p><strong>Ekspozycja:</strong> {face.faceAttributes.exposure.exposureLevel} ({(face.faceAttributes.exposure.value * 100).toFixed(0)}%)</p>
+                    <p><strong>Szum:</strong> {face.faceAttributes.noise.noiseLevel} ({(face.faceAttributes.noise.value * 100).toFixed(0)}%)</p>
+
+                    <h4>🙈 Przesłonięcia:</h4>
+                    <p><strong>Czoło zakryte:</strong> {face.faceAttributes.occlusion.foreheadOccluded ? 'Tak' : 'Nie'}</p>
+                    <p><strong>Oczy zakryte:</strong> {face.faceAttributes.occlusion.eyeOccluded ? 'Tak' : 'Nie'}</p>
+                    <p><strong>Usta zakryte:</strong> {face.faceAttributes.occlusion.mouthOccluded ? 'Tak' : 'Nie'}</p>
+
+                    <h4>📈 Jakość rozpoznania:</h4>
+                    <p><strong>Poziom:</strong> {face.faceAttributes.qualityForRecognition}</p>
 
 
                 </div>
