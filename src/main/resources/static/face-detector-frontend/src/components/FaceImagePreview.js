@@ -29,7 +29,9 @@ const FaceImagePreview = ({ imageUrl, faceData }) => {
             );
         };
     }, [imageUrl, faceData]);
-
+    if (!imageUrl || !faceData || faceData.length === 0) {
+        return null;
+    }
     return (
         <div className="hud-frame">
             <h2 className="preview-title">PODGLĄD TWARZY</h2>

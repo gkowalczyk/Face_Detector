@@ -109,6 +109,46 @@ body {
     padding-bottom: 0.5rem;
 }
 
+.neon-input {
+    background-color: transparent;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.95rem;
+    width: 320px;
+    box-shadow: 0 0 10px #00ffff33;
+    outline: none;
+    transition: 0.3s ease;
+}
 
+.neon-input::placeholder {
+    color: #00ffff88;
+}
+
+.neon-input:focus {
+    box-shadow: 0 0 20px #00ffffaa;
+    border-color: #00ffff;
+}
+
+.neon-button {
+    background-color: transparent;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    padding: 20px 30px;
+    margin-left: 1rem;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 0 10px #00ffff33;
+}
+
+.neon-button:hover {
+    background-color: #00ffff22;
+    box-shadow: 0 0 20px #00ffffaa;
+}
 
 

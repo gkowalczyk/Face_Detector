@@ -11,14 +11,15 @@ const FaceAppForm = ({onSubmit}) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{marginBottom: "1rem"}}>
+        <form onSubmit={handleSubmit} className="form-wrapper">
             <input
+                className="neon-input"
                 type="text"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="Wklej link do zdjęcia"
-                style={{width: "300px", padding: "8px"}}/>
-            <button type="submit" style={{padding: "8px", marginLeft: "1rem"}}>Analizuj</button>
+            />
+            <button type="submit" className="neon-button">Analizuj</button>
         </form>
     );
 };
