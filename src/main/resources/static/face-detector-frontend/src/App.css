@@ -1,26 +1,114 @@
 body {
-  background-color: #060616;
-  color: #00ffff;
-  font-family: 'Orbitron', sans-serif;
-  margin: 0;
+    background-color: #060616;
+    color: #00ffff;
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
 }
 
 .app-container {
-  padding: 2rem;
-  text-align: center;
+    padding: 2rem;
+    text-align: center;
 }
 
 .title {
-  font-size: 2.5rem;
-  color: #00ffff;
-  text-shadow: 0 0 20px #00ffff;
-  margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: #00ffff;
+    text-shadow: 0 0 20px #00ffff;
+    margin-bottom: 2rem;
 }
 
 .content-wrapper {
-  display: flex;
-  gap: 3rem;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+    margin: 2rem auto 0 auto;
+
 }
+
+.hud-panel {
+    position: relative;
+    background-color: rgba(0, 10, 20, 0.8);
+    padding: 1.5rem 5rem;
+    color: #00ffff;
+    border: 2px solid #00ffff;
+    border-radius: 10px;
+    flex: 1;
+    min-width: 0;
+
+    box-shadow: 0 0 10px #00ffff,
+    0 0 20px #00ffff44,
+    0 0 40px #00ffff22;
+
+    font-family: Orbitron, sans-serif;
+    text-align: left;
+}
+
+.hud-panel h2, h4 {
+    color: #00ffff;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #00ffff;
+    border-bottom: 1px solid #00ffff33;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.hud-panel p {
+    margin: 0.3rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hud-panel p::before {
+    content: "⟡";
+    color: #00ffffaa;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.hud-frame {
+    border: 2px solid #00ffff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    flex: 1;
+    min-width: 0;
+    margin: 0 auto;
+    box-shadow: 0 0 8px #00ffff,
+    0 0 16px #00ffff66;
+    background: radial-gradient(ellipse at center, #06101c 0%, #020412 100%);
+}
+
+.hud-canvas-wrapper {
+    padding: 0.25rem;
+    background-color: #000;
+    border: 1px solid #00ffff88;
+    border-radius: 10px;
+    box-shadow: inset 0 0 20px #00ffff33;
+}
+
+.canvas-frame {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+}
+.preview-title {
+    text-align: center;
+    color: #00ffff;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #00ffff;
+    margin-bottom: 1rem;
+    font-family: 'Orbitron', sans-serif;
+    border-bottom: 1px solid #00ffff33;
+    padding-bottom: 0.5rem;
+}
+
+
+
+
