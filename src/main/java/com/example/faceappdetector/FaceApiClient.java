@@ -20,7 +20,7 @@ import java.util.Optional;
 public class FaceApiClient {
 
     private static final String FACE_API_URL = "https://gkowalczyk1989.cognitiveservices.azure.com//face/v1.2-preview.1/detect?";
-    @Value("${FACE_APP_KEY}")
+    @Value("${azure.face.api.key}")
     private String faceAppKey;
 
 
