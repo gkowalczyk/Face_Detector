@@ -1,16 +1,15 @@
-package com.example.faceappdetector;
+package com.example.faceappdetector.client;
 
+import com.example.faceappdetector.repository.FaceRepository;
+import com.example.faceappdetector.aspect.SaveDataToDb;
 import com.example.faceappdetector.model.FaceObject;
+import com.example.faceappdetector.model.ImgUrl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -19,8 +18,6 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 @Service
 @Slf4j
@@ -31,8 +28,9 @@ public class FaceApiClient {
     @Value("${azure.face.api.key}")
     private String faceAppKey;
     private final WebClient webClient;
+    private final FaceRepository faceRepository;
 
-
+   @SaveDataToDb
     public Mono<List<FaceObject>> getFaceByUrl(String url) {
         return webClient.post()
                 .uri(getFaceApiUrl())
@@ -41,6 +39,8 @@ public class FaceApiClient {
                 .retrieve()
                 .bodyToMono(FaceObject[].class)
                 .map(Arrays::asList)
+                .flatMapMany(faceRepository::saveAll)
+                .collectList()
                 .onErrorResume(e -> {
                     log.error("Błąd podczas pobierania twarzy: {}", e.getMessage());
                     return Mono.just(Collections.emptyList());

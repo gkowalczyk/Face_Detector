@@ -1,69 +1,42 @@
-
 package com.example.faceappdetector.model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.annotation.processing.Generated;
+import com.fasterxml.jackson.annotation.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "faceRectangle",
-    "faceLandmarks",
-    "faceAttributes"
+        "faceRectangle",
+        "faceLandmarks",
+        "faceAttributes"
 })
-@Generated("jsonschema2pojo")
+@Document
 @ToString
+@RequiredArgsConstructor
+@Data
 public class FaceObject {
 
-
+    @Id
+    private String id;
 
     @JsonProperty("faceRectangle")
     private FaceRectangle faceRectangle;
+
     @JsonProperty("faceLandmarks")
     private FaceLandmarks faceLandmarks;
+
     @JsonProperty("faceAttributes")
     private FaceAttributes faceAttributes;
+
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-    @JsonProperty("faceRectangle")
-    public FaceRectangle getFaceRectangle() {
-        return faceRectangle;
-    }
-
-    @JsonProperty("faceRectangle")
-    public void setFaceRectangle(FaceRectangle faceRectangle) {
-        this.faceRectangle = faceRectangle;
-    }
-
-    @JsonProperty("faceLandmarks")
-    public FaceLandmarks getFaceLandmarks() {
-        return faceLandmarks;
-    }
-
-    @JsonProperty("faceLandmarks")
-    public void setFaceLandmarks(FaceLandmarks faceLandmarks) {
-        this.faceLandmarks = faceLandmarks;
-    }
-
-    @JsonProperty("faceAttributes")
-    public FaceAttributes getFaceAttributes() {
-        return faceAttributes;
-    }
-
-    @JsonProperty("faceAttributes")
-    public void setFaceAttributes(FaceAttributes faceAttributes) {
-        this.faceAttributes = faceAttributes;
-    }
+    private Map<String, Object> additionalProperties = new LinkedHashMap<>();
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
@@ -74,5 +47,4 @@ public class FaceObject {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
 }

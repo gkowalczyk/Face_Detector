@@ -8,6 +8,7 @@ body {
 .app-container {
     padding: 2rem;
     text-align: center;
+    margin : 0 auto;
 }
 
 .title {
@@ -149,6 +150,39 @@ body {
 .neon-button:hover {
     background-color: #00ffff22;
     box-shadow: 0 0 20px #00ffffaa;
+}
+
+.sidebar {
+    width: 240px;
+    font-family: 'Orbitron', sans-serif;
+    height: 100vh;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.sidebar-title {
+    font-size: 24px;
+    border-bottom: 1px solid #00ffff;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar ul li {
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+}
+.sidebar ul li:hover {
+    background-color: rgba(0, 255, 255, 0.4);
+}
+.sidebar ul li.active {
+    background-color: rgba(0, 255, 255, 0.15);
+    box-shadow: 0 0 12px #00ffff55 inset;
 }
 
 

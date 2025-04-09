@@ -1,4 +1,4 @@
-package com.example.faceappdetector;
+package com.example.faceappdetector.model;
 
 
 import java.util.LinkedHashMap;
