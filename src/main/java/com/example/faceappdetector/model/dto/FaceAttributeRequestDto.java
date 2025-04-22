@@ -6,9 +6,18 @@ import java.util.List;
 
 @Data
 public class FaceAttributeRequestDto {
-    private Double age;
+    private Double ageMin;
+    private Double ageMax;
     private String gender;
     private Double smile;
+    private Double smileMin;
+    private Double smileMax;
+    private Double moustacheMin;
+    private Double moustacheMax;
+    private Double beardMin;
+    private Double beardMax;
+    private Double sideburnsMin;
+    private Double sideburnsMax;
     private HeadPose headPose;
     private FacialHair facialHair;
     private String glasses;
@@ -17,6 +26,8 @@ public class FaceAttributeRequestDto {
     private Noise noise;
     private Makeup makeup;
     private Occlusion occlusion;
+    private Double hairBaldMin;
+    private Double hairBaldMax;
     private Hair hair;
     private String hairColor;
     private String qualityForRecognition;

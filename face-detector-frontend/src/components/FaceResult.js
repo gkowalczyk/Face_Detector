@@ -1,7 +1,8 @@
 import React from 'react';
 
 const FaceResult = ({faceData}) => {
-    if (!Array.isArray(faceData) || faceData.length === 0) return null;
+    if (!Array.isArray(faceData) || faceData.length === 0)
+        return null;
 
     const translateHairColor = (color) => {
         const colorMap = {

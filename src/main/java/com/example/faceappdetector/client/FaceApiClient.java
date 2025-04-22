@@ -12,7 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -30,7 +29,7 @@ public class FaceApiClient {
     private final WebClient webClient;
     private final FaceRepository faceRepository;
 
-   @SaveDataToDb
+    @SaveDataToDb
     public Mono<List<FaceObject>> getFaceByUrl(String url) {
         return webClient.post()
                 .uri(getFaceApiUrl())
@@ -39,6 +38,10 @@ public class FaceApiClient {
                 .retrieve()
                 .bodyToMono(FaceObject[].class)
                 .map(Arrays::asList)
+                .map(faceList -> {
+                    faceList.forEach(face -> face.setImageUrl(url));
+                    return faceList;
+                })
                 .flatMapMany(faceRepository::saveAll)
                 .collectList()
                 .onErrorResume(e -> {
@@ -60,7 +63,7 @@ public class FaceApiClient {
             URIBuilder uriBuilder = new URIBuilder(FACE_API_URL);
             uriBuilder
                     .setParameter("detectionModel", "detection_01")
-                    .setParameter("recognitionModel", "recognition_03")
+                    .setParameter("recognitionModel", "recognition_04")
                     .setParameter("returnFaceAttributes", "glasses, age, smile,headPose," +
                             "occlusion,accessories,blur,exposure,noise,qualityForRecognition," +
                             " hair, makeup, facialHair, headPose, smile")
