@@ -29,6 +29,8 @@ public class FaceObject {
     @JsonProperty("faceRectangle")
     private FaceRectangle faceRectangle;
 
+    private String imageUrl;
+
     @JsonProperty("faceLandmarks")
     private FaceLandmarks faceLandmarks;
 
