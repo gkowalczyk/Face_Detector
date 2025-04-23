@@ -19,13 +19,6 @@ Built with a **React frontend** and a **Spring Boot backend**, wrapped in a sci-
 - Beautiful HUD-style interface
 - Full-stack setup using React + Spring Boot + Azure API
 
----# 🧠 Face Analysis App
-
-A futuristic full-stack application that analyzes facial features using the **Azure Face API**.  
-Built with a **React frontend** and a **Spring Boot backend**, wrapped in a sci-fi inspired user interface.
-
-🌐 **Live demo:**  
-🔗 [https://face-detector-app.netlify.app](https://face-detector-app.netlify.app)
 
 ---
 
