@@ -23,17 +23,13 @@ public class FaceDetectorService {
 
     public Mono<List<FaceObject>> filterFaces(FaceAttributeRequestDto faceAttributes) {
 
-        assert faceAttributes.getHair() != null;
-        assert faceAttributes.getHair() != null;
-        assert faceAttributes.getHair() != null;
+
         Query query = new Query(new Criteria()
                 .andOperator(Stream.of(
                                 Optional.ofNullable(faceAttributes.getAgeMin())
-
                                         .map(ageMin -> Criteria.where("faceAttributes.age").gte(ageMin)),
 
                                 Optional.ofNullable(faceAttributes.getAgeMax())
-
                                         .map(ageMax -> Criteria.where("faceAttributes.age").lte(ageMax)),
 
                                 Optional.ofNullable(faceAttributes.getSmileMin())

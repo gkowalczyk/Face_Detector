@@ -46,3 +46,37 @@ Built with a **React frontend** and a **Spring Boot backend**, wrapped in a sci-
 ![screenshot](src/main/resources/preview.bmp) <!-- <- Replace with your real app screenshot -->
 
 ---
+## 🧪 Practical Use Cases
+
+This facial analysis application can be adapted for various real-world scenarios:
+
+- 🔍 **Person Search & Forensics**  
+  Match unknown or wanted individuals by analyzing facial traits against a database (without using faceId).
+
+- 🎥 **Video Scene Analysis** *(planned)*  
+  Upload video clips to automatically extract frames and analyze faces within them.
+
+- 🧪 **Psychological or Marketing Research**  
+  Analyze facial expressions to measure emotions (e.g. smile, attention, or fatigue levels).
+
+- 🛂 **Access Control & Identity Validation**  
+  Validate facial features for access systems (e.g., check for glasses, makeup, facial hair).
+
+
+## 📈 Performance Test Result  (Gatling)
+
+Tests were created for the  `/api/face/filter` endpoint:
+- 50 parallel requests
+- 100% successful OK
+- Average response time: 503 ms
+- Maximum response time : 767 ms
+
+👉 [View full report](src/test/java/simulations/index_filter.html)
+
+Tests were created for the  `/api/face` endpoint:
+- 50 parallel requests
+- 100% successful OK
+- Average response time: ~1300–1400 ms — a bit high, but reasonable if the backend is calling an external service
+- Maximum response time : 2946ms
+
+👉 [View full report](src/test/java/simulations/index_analyzeByUrl.html)
