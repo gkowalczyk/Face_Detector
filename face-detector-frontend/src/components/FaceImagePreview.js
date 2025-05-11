@@ -4,7 +4,7 @@ const FaceImagePreview = ({ imageUrl, faceData }) => {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        if (!imageUrl || !faceData || faceData.length === 0) return;
+        if (!imageUrl || !faceData || !faceData.faceRectangle) return;
 
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
@@ -16,7 +16,7 @@ const FaceImagePreview = ({ imageUrl, faceData }) => {
             canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
 
-            const {faceRectangle} = faceData[0];
+            const {faceRectangle} = faceData;
             ctx.strokeStyle = "#00ffff";
             ctx.lineWidth = 3;
             ctx.shadowColor = "#00ffff";
@@ -29,7 +29,7 @@ const FaceImagePreview = ({ imageUrl, faceData }) => {
             );
         };
     }, [imageUrl, faceData]);
-    if (!imageUrl || !faceData || faceData.length === 0) {
+    if (!imageUrl || !faceData || !faceData.faceRectangle) {
         return null;
     }
     return (

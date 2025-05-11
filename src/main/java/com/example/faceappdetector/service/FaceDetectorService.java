@@ -1,15 +1,15 @@
 package com.example.faceappdetector.service;
 
-import com.example.faceappdetector.model.dto.FaceAttributeRequestDto;
-import com.example.faceappdetector.model.FaceObject;
+import com.example.faceappdetector.entity.FaceObjectEntity;
+import com.example.faceappdetector.request.FaceAttributeRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -21,8 +21,7 @@ public class FaceDetectorService {
 
     private final ReactiveMongoTemplate reactiveMongoTemplate;
 
-    public Mono<List<FaceObject>> filterFaces(FaceAttributeRequestDto faceAttributes) {
-
+    public Flux<FaceObjectEntity> filterFaces(FaceAttributeRequestDto faceAttributes) {
 
         Query query = new Query(new Criteria()
                 .andOperator(Stream.of(
@@ -38,7 +37,8 @@ public class FaceDetectorService {
                                         .map(max -> Criteria.where("faceAttributes.smile").lte(max)),
 
                                 Optional.ofNullable(faceAttributes.getGender())
-                                        .map(gender -> Criteria.where("faceAttributes.gender").is(gender)),
+                                        .filter(g -> !g.isEmpty())
+                                        .map(gender -> Criteria.where("faceAttributes.gender.value").is(gender)),
 
                                 Optional.ofNullable(faceAttributes.getHeadPose())
                                         .map(hp -> Criteria.where("faceAttributes.headPose.pitch").is(hp.getPitch())),
@@ -48,7 +48,6 @@ public class FaceDetectorService {
                                         .map(hp -> Criteria.where("faceAttributes.headPose.yaw").is(hp.getYaw())),
 
                                 Optional.ofNullable(faceAttributes.getMoustacheMin())
-
                                         .map(min -> Criteria.where("faceAttributes.facialHair.moustache").gte(min)),
 
                                 Optional.ofNullable(faceAttributes.getMoustacheMax())
@@ -109,7 +108,7 @@ public class FaceDetectorService {
                                         .map(min -> Criteria.where("faceAttributes.hair.bald").gte(min)),
 
                                 Optional.ofNullable(faceAttributes.getHairBaldMax())
-                                        .map(max -> Criteria.where("faceAttributes.facialHair.moustache").lte(max)),
+                                        .map(max -> Criteria.where("faceAttributes.hair.bald").lte(max)),
 
                                 Optional.ofNullable(faceAttributes.getHair())
                                         .map(hair -> Criteria.where("faceAttributes.hair.invisible").is(hair.getInvisible())),
@@ -119,17 +118,17 @@ public class FaceDetectorService {
                                         .map(color -> Criteria.where("faceAttributes.hair.hairColor.0.color").is(color)),
 
                                 Optional.ofNullable(faceAttributes.getQualityForRecognition())
-                                        .map(q -> Criteria.where("faceAttributes.qualityForRecognition").is(q))
-                        ).flatMap(Optional::stream)
+                                        .map(q -> Criteria.where("faceAttributes.qualityForRecognition").is(q)))
+
+                        .flatMap(Optional::stream)
                         .toArray(Criteria[]::new)));
 
-        return reactiveMongoTemplate.find(query, FaceObject.class)
+        return reactiveMongoTemplate.find(query, FaceObjectEntity.class)
                 .doOnNext(faceObject -> log.info("Found face object: {}", faceObject))
                 .onErrorResume(e -> {
                     log.info("Error occurred while filtering faces: {}", e.getMessage());
-                    return Mono.empty();
-                })
-                .collectList();
+                    return Flux.empty();
+                });
     }
 }
 

@@ -1,8 +1,10 @@
 package com.example.faceappdetector.controller;
 
 import com.example.faceappdetector.client.FaceApiClient;
-import com.example.faceappdetector.model.FaceObject;
-import com.example.faceappdetector.model.ImgUrl;
+import com.example.faceappdetector.dto.FaceObject;
+import com.example.faceappdetector.dto.ImgUrl;
+import com.example.faceappdetector.entity.FaceObjectEntity;
+import com.example.faceappdetector.mapper.FaceObjectMapper;
 import com.example.faceappdetector.service.FaceDetectorService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import reactor.core.publisher.Mono;
 import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @WebFluxTest(FaceApiController.class)
@@ -28,6 +31,8 @@ class ControllerUnitTest {
     private FaceApiClient faceApiClient;
     @MockBean
     private FaceDetectorService faceDetectorService;
+    @MockBean
+    private FaceObjectMapper faceObjectMapper;
 
     @DisplayName("Should return face objects when given a valid image URL")
     @Test
@@ -40,6 +45,8 @@ class ControllerUnitTest {
 
         // When
         when(faceApiClient.getFaceByUrl(url)).thenReturn(Mono.just(faceObjects));
+        when(faceObjectMapper.toDto(any())).thenReturn(new FaceObject());
+
 
         //Then
         webTestClient.post()
@@ -73,7 +80,6 @@ class ControllerUnitTest {
     void shouldReturnEmptyFaces() {
         String url = "https://example.com/image.jpg";
         ImgUrl i = new ImgUrl(url);
-        List<FaceObject> faceObjects = List.of(new FaceObject());
 
         // When
         when(faceApiClient.getFaceByUrl(url)).thenReturn(Mono.just(Collections.emptyList()));

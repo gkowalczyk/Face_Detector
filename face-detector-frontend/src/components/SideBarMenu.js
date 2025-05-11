@@ -7,7 +7,7 @@ const SideBarMenu = ({ onMenuItemClick }) => {
             <ul>
                 <li onClick={() => onMenuItemClick("analyze")}>🧠 Analiza z URL</li>
                 <li onClick={() => onMenuItemClick("filter")}>🔍 Znajdź w bazie</li>
-                <li onClick={() => onMenuItemClick("verify")}>👤 Zweryfikuj twarz</li>
+                <li onClick={() => onMenuItemClick("verify")}>👤 Weryfikacja tożsamości</li>
                 <li onClick={() => onMenuItemClick("about")}>ℹ️ O aplikacji</li>
 
             </ul>
