@@ -61,7 +61,7 @@ const FaceResult = ({faceData, view}) => {
             <h2 style={{textAlign: "center"}}>Wynik analizy</h2>
 
             <p><strong>Wiek:</strong> {face.faceAttributes.age}</p>
-            <p><strong>Płeć:</strong> {face.faceAttributes.gender.value === 'Male' ? 'Mężczyzna' : 'Kobieta'}</p>
+            <p><strong>Płeć:</strong> {face.faceAttributes.gender.value === 'Male' ? 'Mężczyznnpra' : 'Kobieta'}</p>
             <p><strong>Uśmiech:</strong> {(face.faceAttributes.smile * 100).toFixed(1)}%</p>
             <p><strong>Okulary:</strong> {face.faceAttributes.glasses === 'NoGlasses' ? 'Nie' : 'Tak'}</p>
 
