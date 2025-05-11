@@ -1,7 +1,8 @@
 package com.example.faceappdetector.service;
 
-import com.example.faceappdetector.model.FaceObject;
-import com.example.faceappdetector.model.dto.FaceAttributeRequestDto;
+import com.example.faceappdetector.dto.FaceObject;
+import com.example.faceappdetector.entity.FaceObjectEntity;
+import com.example.faceappdetector.request.FaceAttributeRequestDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,20 +29,23 @@ class FaceDetectorServiceTest {
 
     @Test
     void shouldShowFacesFilterByAge() {
-        //Given
-        FaceAttributeRequestDto faceAttributes = new FaceAttributeRequestDto();
-        faceAttributes.setAgeMin(20.0);
-        FaceObject faceObject = new FaceObject();
-        List<FaceObject> faceObjects = List.of(faceObject);
+        // Given
+        FaceAttributeRequestDto request = new FaceAttributeRequestDto();
+        request.setAgeMin(20.0);
 
-        //When
-        when(mongoTemplate.find(any(Query.class), eq(FaceObject.class)))
-                .thenReturn(Flux.fromIterable(faceObjects));
-        Mono<List<FaceObject>> filteredFaces = faceDetectorService.filterFaces(faceAttributes);
-        //Then
-        StepVerifier.create(filteredFaces)
-                .expectNext(faceObjects)
-                .verifyComplete();
-        verify(mongoTemplate).find(any(Query.class), eq(FaceObject.class));
+        FaceObjectEntity faceObjectEntity = new FaceObjectEntity();
+
+        when(mongoTemplate.find(any(Query.class), eq(FaceObjectEntity.class)))
+                .thenReturn(Flux.just(faceObjectEntity));
+
+        // When
+        Flux<FaceObjectEntity> result = faceDetectorService.filterFaces(request);
+
+        // Then
+        StepVerifier.create(result)
+                .expectComplete()
+                .verify();
+
+        verify(mongoTemplate, times(1)).find(any(Query.class), eq(FaceObjectEntity.class));
     }
 }

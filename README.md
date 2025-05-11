@@ -43,7 +43,7 @@ Built with a **React frontend** and a **Spring Boot backend**, wrapped in a sci-
 
 ## 💻 Preview
 
-![screenshot](src/main/resources/preview.bmp) <!-- <- Replace with your real app screenshot -->
+![screenshot](src/main/resources/preview.bmp) 
 
 ---
 ## 🧪 Practical Use Cases

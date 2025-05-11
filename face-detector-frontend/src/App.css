@@ -145,6 +145,7 @@ body {
     cursor: pointer;
     transition: 0.3s ease;
     box-shadow: 0 0 10px #00ffff33;
+    animation: pulseGlow 2s infinite;
 }
 
 .neon-button:hover {
@@ -275,5 +276,37 @@ body {
     background-color: rgba(0, 255, 255, 0.1);
     box-shadow: 0 0 20px #00ffff;
 }
+.form-wrapper {
+    margin-bottom: 1rem;
+}
+.save-button {
+    background-color: transparent;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    padding: 16px 28px;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 0 12px #00ff8866;
+    animation: pulseGlow 2s infinite;
+    font-weight: bold;
+}
 
+.save-button:hover {
+    background-color: rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 20px #00ff88cc;
+}
 
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 8px #00ff8866;
+    }
+    50% {
+        box-shadow: 0 0 16px #00ff88;
+    }
+    100% {
+        box-shadow: 0 0 8px #00ff8866;
+    }
+}

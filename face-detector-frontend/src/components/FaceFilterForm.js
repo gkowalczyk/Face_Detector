@@ -17,7 +17,9 @@ const FaceFilterForm = ({onFilter}) => {
         glasses: "",
         makeup: {eyeMakeup: '', lipMakeup: ''},
         occlusion: {foreheadOccluded: '', eyeOccluded: '', mouthOccluded: ''},
-        hairColor: ""
+        hairColor: "",
+        gender: "",
+
     });
 
     const handleChange = (e) => {
@@ -44,7 +46,6 @@ const FaceFilterForm = ({onFilter}) => {
         }
     };
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         onFilter(formData);
@@ -70,6 +71,19 @@ const FaceFilterForm = ({onFilter}) => {
                     value={formData.ageMax}
                     onChange={handleChange}
                 />
+            </div>
+
+            <div>
+                <label>Płeć:</label>
+                <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                >
+                    <option value="">Dowolne</option>
+                    <option value="Male">Mężczyzna</option>
+                    <option value="Female">Kobieta</option>
+                </select>
             </div>
 
 

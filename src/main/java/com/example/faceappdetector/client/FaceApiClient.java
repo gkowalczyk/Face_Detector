@@ -1,9 +1,7 @@
 package com.example.faceappdetector.client;
 
-import com.example.faceappdetector.repository.FaceRepository;
-import com.example.faceappdetector.aspect.SaveDataToDb;
-import com.example.faceappdetector.model.FaceObject;
-import com.example.faceappdetector.model.ImgUrl;
+import com.example.faceappdetector.dto.FaceObject;
+import com.example.faceappdetector.dto.ImgUrl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
@@ -21,31 +19,36 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class FaceApiClient {
+public class FaceApiClient implements FaceClientInterface {
 
-    private static final String FACE_API_URL = "https://gkowalczyk1989.cognitiveservices.azure.com//face/v1.2-preview.1/detect?";
+    @Value("${azure.face.api.url}")
+    private String faceAppUrl;
     @Value("${azure.face.api.key}")
     private String faceAppKey;
     private final WebClient webClient;
-    private final FaceRepository faceRepository;
 
-    @SaveDataToDb
+
     public Mono<List<FaceObject>> getFaceByUrl(String url) {
+
         return webClient.post()
                 .uri(getFaceApiUrl())
                 .headers(httpHeaders -> httpHeaders.addAll(getHttpHeaders()))
                 .bodyValue(new ImgUrl(url))
                 .retrieve()
+                .onStatus(status -> status.isError(), response -> {
+                    return response.bodyToMono(String.class).flatMap(body -> {
+                        log.error("Azure API error: {}", body);
+                        return Mono.error(new RuntimeException("Azure API returned error: " + body));
+                    });
+                })
+
                 .bodyToMono(FaceObject[].class)
                 .map(Arrays::asList)
-                .map(faceList -> {
-                    faceList.forEach(face -> face.setImageUrl(url));
-                    return faceList;
-                })
-                .flatMapMany(faceRepository::saveAll)
-                .collectList()
+                .map(faceList -> faceList.stream()
+                        .peek(faceObject -> faceObject.setUrl(url))
+                        .toList())
                 .onErrorResume(e -> {
-                    log.error("Błąd podczas pobierania twarzy: {}", e.getMessage());
+                    log.error("Error: {}", e.getMessage());
                     return Mono.just(Collections.emptyList());
                 });
     }
@@ -60,7 +63,7 @@ public class FaceApiClient {
     public URI getFaceApiUrl() {
         URI uri = null;
         try {
-            URIBuilder uriBuilder = new URIBuilder(FACE_API_URL);
+            URIBuilder uriBuilder = new URIBuilder(faceAppUrl);
             uriBuilder
                     .setParameter("detectionModel", "detection_01")
                     .setParameter("recognitionModel", "recognition_04")
