@@ -8,9 +8,7 @@ import javax.annotation.processing.Generated;
 import java.util.List;
 
 @Data
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
 @Generated("jsonschema2pojo")
 public class FaceApiMatchResponse {
     @JsonProperty("thresholds")
