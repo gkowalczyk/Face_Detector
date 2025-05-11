@@ -164,7 +164,7 @@ function App() {
                         </ul>
 
                                                <p><strong>Repozytorium projektu:</strong> <br />
-                            <a href="https://github.com/gkowalczyk/Face_Detector" target="_blank" style={{color: "#00ffff"}}>
+                                                   <a href="https://github.com/..." target="_blank" rel="noreferrer"> style={{color: "#00ffff"}}>
                                 https://github.com/gkowalczyk/Face_Detector
                             </a></p>
                         <h4>📸 Wymagania dotyczące zdjęć</h4>
