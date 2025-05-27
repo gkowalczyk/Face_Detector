@@ -23,8 +23,7 @@ public class AzureVideoIndexClient {
     private final String azureIndexerUrl = "https://api.videoindexer.ai/eastus/Accounts";
     @Value("${azure.video.account-id}")
     private String accountId;
-    //private final String callbackUrl = "https://facedetector-production-71e7.up.railway.app/api/video/callback";
-    private final String callbackUrl = "https://webhook.site/aee7ca6f-61dc-4527-a078-095ef13be6d7";
+    private final String callbackUrl = "https://facedetector-production-71e7.up.railway.app/api/video/callback";
     private final AzureAuthVideoIndexClient azureAuthVideoIndexClient;
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 

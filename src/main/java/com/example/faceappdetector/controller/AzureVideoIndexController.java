@@ -25,11 +25,11 @@ public class AzureVideoIndexController {
     }
 
     @PostMapping("/api/video/callback")
-    public ResponseEntity<Flux<FaceVideoDto>> handleCallBackFromAzurePortal(@RequestParam String videoId,
+    public ResponseEntity<Flux<FaceVideoDto>> handleCallBackFromAzurePortal(@RequestParam String id,
                                                                             @RequestParam String state) {
-        log.info("Callback received: videoId={}, state={}", videoId, state);
+        log.info("Callback received: videoId={}, state={}", id, state);
         if ("Processed".equalsIgnoreCase(state)) {
-            return ResponseEntity.ok(azureVideoIndexClient.analyzeVideo(videoId));
+            return ResponseEntity.ok(azureVideoIndexClient.analyzeVideo(id));
         }
         return ResponseEntity.ok(Flux.empty());
     }
