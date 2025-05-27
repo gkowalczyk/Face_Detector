@@ -22,7 +22,7 @@ public class AzureVideoIndexClient {
     private final WebClient webClient;
     private final String azureIndexerUrl = "https://api.videoindexer.ai/eastus/Accounts";
     @Value("${azure.video.account-id}")
-    private final String accountId;
+    private String accountId;
     private final String callbackUrl = "https://face-detector-app.netlify.app/api/video/callback";
     private final AzureAuthVideoIndexClient azureAuthVideoIndexClient;
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();

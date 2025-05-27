@@ -24,7 +24,7 @@ public class AzureAuthVideoIndexClient {
     @Value("${azure.auth.client-secret}")
     private String clientSecret;
     @Value("${azure.video.client.subscription-id}")
-    private final String subscriptionId;
+    private String subscriptionId;
     private final String resourceGroup = "zasob1";
     private final String accountName = "AzureVideoApi";
     private final String apiVersion = "2025-01-01";
