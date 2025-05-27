@@ -4,8 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({

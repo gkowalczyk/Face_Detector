@@ -18,7 +18,7 @@ function App() {
         try {
             setImageUrl(url)
             const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face", {
-              //  const response = await fetch("http://localhost:8081/api/face", {
+             //   const response = await fetch("http://localhost:8081/api/face", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

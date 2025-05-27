@@ -11,6 +11,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("jsonschema2pojo")
 public class FaceApiMatchResponse {
+
     @JsonProperty("thresholds")
     private Thresholds thresholds;
     @JsonProperty("results")
@@ -34,6 +35,5 @@ public class FaceApiMatchResponse {
         private double confidence;
         @JsonProperty("face_token")
         private String faceToken;
-
-           }
+    }
 }
