@@ -35,8 +35,8 @@ const FaceResult = ({faceData, view}) => {
         }
 
         try {
-            //const response = await fetch('http://localhost:8081/api/face/save', {
-              const response = await fetch('https://facedetector-production-71e7.up.railway.app/api/face/save', {
+            const response = await fetch('http://localhost:8081/api/face/save', {
+             // const response = await fetch('https://facedetector-production-71e7.up.railway.app/api/face/save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

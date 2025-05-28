@@ -17,7 +17,7 @@ const FaceAppForm = ({onSubmit}) => {
                 type="text"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="Wklej link do zdjęcia"
+                placeholder="Wklej link URL do zdjęcia"
             />
             <button type="submit" className="neon-button">Analizuj</button>
         </form>

@@ -17,8 +17,8 @@ function App() {
     const handleImageSubmit = async (url) => {
         try {
             setImageUrl(url)
-            const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face", {
-             //   const response = await fetch("http://localhost:8081/api/face", {
+           // const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face", {
+                const response = await fetch("http://localhost:8081/api/face", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -36,8 +36,8 @@ function App() {
 
 
         try {
-            //const response = await fetch("http://localhost:8081/api/face/filter", {
-            const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/filter", {
+            const response = await fetch("http://localhost:8081/api/face/filter", {
+            //const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/filter", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -58,8 +58,8 @@ function App() {
     const handleMachSubmit = async (url) => {
         try {
             setImageUrl(url);
-             const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/getSimilar", {
-           // const response = await fetch("http://localhost:8081/api/face/getSimilar", {
+            // const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/getSimilar", {
+            const response = await fetch("http://localhost:8081/api/face/getSimilar", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

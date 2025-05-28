@@ -75,7 +75,9 @@ public class AzureVideoIndexClient {
                                     .subscribeOn(Schedulers.boundedElastic())
                                     .flatMapMany(Flux::fromArray))
                             .doOnNext(faceVideoDto -> {
-                                log.info("Received face video data: {}", videoId);
+                                log.info("Received face video data id: {}", videoId);
+                                log.info("Received face: {}", faceVideoDto);
+
                             });
                 })
                 .onErrorResume(e -> {
