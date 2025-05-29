@@ -1,6 +1,7 @@
 package com.example.faceappdetector.service;
 
 import com.example.faceappdetector.client.FacePlusApiClient;
+import com.example.faceappdetector.client.ImgBBClient;
 import com.example.faceappdetector.dto.FaceObject;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class VideoFrameExtractor {
     private final FacePlusApiClient facePlusApiClient;
     private Flux<FaceObject> faceObjectsFlux;
     private final FaceMatchService faceMatchService;
+    private final ImgBBClient imgBBClient;
 
     public Flux<FaceObject> extractFrames(String videoUrl, String startTime, String endTime) {
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
@@ -44,7 +46,6 @@ public class VideoFrameExtractor {
         double middleTimeStamp = (secondsStart + secondsEnd) / 2;
 
         String fileName = "frame_" + System.currentTimeMillis() + ".png";
-        String publicHost = "https://facedetector-production-71e7.up.railway.app";
         String imagePath = "src/main/resources/static" + "/" + fileName;
 
         try {
@@ -66,7 +67,7 @@ public class VideoFrameExtractor {
                 return Flux.error(new RuntimeException("FFmpeg error"));
             }
 
-            String fileUrl = publicHost + "/" + fileName;
+            String fileUrl = imgBBClient.uploadToImgBB(Path.of(imagePath), fileName);
             log.info("Frame extracted successfully: {}", fileUrl);
 
             return faceMatchService.matchFace(fileUrl)
