@@ -44,7 +44,7 @@ public class VideoFrameExtractor {
         double middleTimeStamp = (secondsStart + secondsEnd) / 2;
 
         String fileName = "frame_" + System.currentTimeMillis() + ".png";
-        String publicHost = "facedetector-production-71e7.up.railway.app";
+        String publicHost = "https://facedetector-production-71e7.up.railway.app";
         String imagePath = "src/main/resources/static" + "/" + fileName;
 
         try {
