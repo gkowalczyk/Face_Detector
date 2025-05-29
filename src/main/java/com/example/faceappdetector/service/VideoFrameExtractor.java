@@ -46,7 +46,7 @@ public class VideoFrameExtractor {
         double middleTimeStamp = (secondsStart + secondsEnd) / 2;
 
         String fileName = "frame_" + System.currentTimeMillis() + ".png";
-        String imagePath = "src/main/resources/static" + "/" + fileName;
+        String imagePath = System.getProperty("java.io.tmpdir") + "/" + fileName;
 
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(
