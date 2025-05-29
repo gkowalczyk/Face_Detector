@@ -1,6 +1,7 @@
 package com.example.faceappdetector.controller;
 
 import com.example.faceappdetector.client.AzureVideoIndexClient;
+import com.example.faceappdetector.dto.FaceObject;
 import com.example.faceappdetector.dto.FaceVideoDto;
 import com.example.faceappdetector.response.VideoAttributeResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,8 @@ public class AzureVideoIndexController {
     }
 
     @PostMapping("/api/video/callback")
-    public ResponseEntity<Flux<FaceVideoDto>> handleCallBackFromAzurePortal(@RequestParam String id,
-                                                                            @RequestParam String state) {
+    public ResponseEntity<Flux<FaceObject>> handleCallBackFromAzurePortal(@RequestParam String id,
+                                                                          @RequestParam String state) {
         log.info("Callback received: videoId={}, state={}", id, state);
         if ("Processed".equalsIgnoreCase(state)) {
             return ResponseEntity.ok(azureVideoIndexClient.analyzeVideo(id));
@@ -34,10 +35,7 @@ public class AzureVideoIndexController {
         return ResponseEntity.ok(Flux.empty());
     }
 
-    @GetMapping("/api/video/callback1")
-    public ResponseEntity<Flux<FaceVideoDto>> handleCallBackFromAzurePortal(@RequestParam String videoId) {
-        return ResponseEntity.ok(azureVideoIndexClient.analyzeVideo(videoId));
-    }
+
 }
 
 

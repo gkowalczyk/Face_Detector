@@ -1,7 +1,9 @@
 package com.example.faceappdetector.client;
 
+import com.example.faceappdetector.dto.FaceObject;
 import com.example.faceappdetector.dto.FaceVideoDto;
 import com.example.faceappdetector.response.VideoAttributeResponseDto;
+import com.example.faceappdetector.service.VideoFrameExtractor;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +31,9 @@ public class AzureVideoIndexClient {
     private final String callbackUrl = "https://facedetector-production-71e7.up.railway.app/api/video/callback";
     private final AzureAuthVideoIndexClient azureAuthVideoIndexClient;
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private final VideoFrameExtractor videoFrameExtractor;
+    private final Map<String, String> videoFrameCache = new ConcurrentHashMap<>();
+
 
     public Mono<VideoAttributeResponseDto> uploadVideo(String url,
                                                        String name,
@@ -46,12 +54,13 @@ public class AzureVideoIndexClient {
                                     }))
                             .bodyToMono(VideoAttributeResponseDto.class)
                             .doOnNext(videoAttributeResponseDto -> {
+                                videoFrameCache.put(videoAttributeResponseDto.getId(), url);
                                 log.info("Video uploaded successfully: {}", videoAttributeResponseDto.getId());
                             });
                 });
     }
 
-    public Flux<FaceVideoDto> analyzeVideo(String videoId) {
+    public Flux<FaceObject> analyzeVideo(String videoId) {
 
         return azureAuthVideoIndexClient.generateVideoIndexToken()
                 .flatMapMany(token -> {
@@ -74,11 +83,13 @@ public class AzureVideoIndexClient {
                                     })
                                     .subscribeOn(Schedulers.boundedElastic())
                                     .flatMapMany(Flux::fromArray))
-                            .doOnNext(faceVideoDto -> {
-                                log.info("Received face video data id: {}", videoId);
-                                log.info("Received face: {}", faceVideoDto);
-
-                            });
+                            .flatMap(faceVideoDto -> {
+                                        log.info("Received face video data id: {}", videoId);
+                                        String start = faceVideoDto.getThumbnails().get(0).getInstances().get(0).getStart();
+                                        String end = faceVideoDto.getThumbnails().get(0).getInstances().get(0).getEnd();
+                                        String videoUrl = videoFrameCache.getOrDefault(videoId, null);
+                                        return videoFrameExtractor.extractFrames(videoUrl, start, end);
+                                    });
                 })
                 .onErrorResume(e -> {
                     log.error("Error retrieving face video id data: {}", e.getMessage(), e);

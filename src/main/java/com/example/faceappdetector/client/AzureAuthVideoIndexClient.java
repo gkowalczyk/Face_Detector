@@ -2,6 +2,7 @@ package com.example.faceappdetector.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,6 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AzureAuthVideoIndexClient {
 
@@ -74,10 +76,10 @@ public class AzureAuthVideoIndexClient {
                             .bodyToMono(JsonNode.class)
                             .map(json -> json.get("accessToken").asText())
                             .doOnSuccess(code -> {
-                                System.out.println("Access token retrieved successfully: " + code);
+                               log.info("Access token retrieved successfully: " + code);
                             })
                             .doOnError(error -> {
-                                System.err.println("Error retrieving access token: " + error.getMessage());
+                                log.error("Error retrieving access token: " + error.getMessage());
                             });
                 });
     }

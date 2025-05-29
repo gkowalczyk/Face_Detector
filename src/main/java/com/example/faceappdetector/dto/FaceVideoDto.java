@@ -15,6 +15,7 @@ public class FaceVideoDto {
     private String title;
     private String thumbnailId;
     private String imageUrl;
+    private String publishedUrl;
     private boolean highQuality;
     private List<ThumbnailDto> thumbnails;
     private List<InstanceDto> instances;
