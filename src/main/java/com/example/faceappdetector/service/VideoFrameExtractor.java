@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,15 +21,22 @@ import java.time.temporal.ChronoField;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Data
 public class VideoFrameExtractor {
 
     private final FacePlusApiClient facePlusApiClient;
-    private Flux<FaceObject> faceObjectsFlux;
     private final FaceMatchService faceMatchService;
     private final ImgBBClient imgBBClient;
 
     public Flux<FaceObject> extractFrames(String videoUrl, String startTime, String endTime) {
+        return Mono.fromCallable(() -> extractMiddleTimeStamp(startTime, endTime))
+                .flatMap(middleTimeStamp -> extractFrameWithFFmpeg(videoUrl, middleTimeStamp))
+                .flatMapMany(path -> imgBBClient.uploadToImgBB(path, path.getFileName().toString())
+                        .doFinally(signal -> deleteTempImage(path.toString()))
+                        .flatMapMany(faceMatchService::matchFace))
+                .doOnError(error -> log.error("Error extracting frames: {}", error.getMessage(), error));
+    }
+
+    public Double extractMiddleTimeStamp(String startTime, String endTime) {
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("H:mm")
                 .optionalStart()
@@ -43,12 +52,14 @@ public class VideoFrameExtractor {
 
         double secondsStart = timeStart.toSecondOfDay() + (timeStart.getNano() / 1_000_000_000.0);
         double secondsEnd = timeEnd.toSecondOfDay() + (timeEnd.getNano() / 1_000_000_000.0);
-        double middleTimeStamp = (secondsStart + secondsEnd) / 2;
+        return (secondsStart + secondsEnd) / 2;
+    }
 
-        String fileName = "frame_" + System.currentTimeMillis() + ".png";
-        String imagePath = System.getProperty("java.io.tmpdir") + "/" + fileName;
+    public Mono<Path> extractFrameWithFFmpeg(String videoUrl, double middleTimeStamp) {
+        return Mono.fromCallable(() -> {
+            String fileName = "frame_" + System.currentTimeMillis() + ".png";
+            String imagePath = System.getProperty("java.io.tmpdir") + "/" + fileName;
 
-        try {
             ProcessBuilder processBuilder = new ProcessBuilder(
                     "ffmpeg",
                     "-ss", String.valueOf(middleTimeStamp),
@@ -63,24 +74,11 @@ public class VideoFrameExtractor {
             int exitCode = process.waitFor();
 
             if (exitCode != 0) {
-                log.error("FFmpeg exited with code {}", exitCode);
-                return Flux.error(new RuntimeException("FFmpeg error"));
+                throw new RuntimeException("FFmpeg process failed with exit code: " + exitCode);
             }
-
-            String fileUrl = imgBBClient.uploadToImgBB(Path.of(imagePath), fileName);
-            log.info("Frame extracted successfully: {}", fileUrl);
-
-            return faceMatchService.matchFace(fileUrl)
-                    .doOnComplete(() -> log.info("Face matching completed for video: {}", videoUrl))
-                    .doOnError(e -> log.error("Error during face matching: {}", e.getMessage(), e))
-                    .doFinally(signalType -> {
-                        deleteTempImage(imagePath);
-                        log.info("Temporary image deleted: {}", imagePath);
-                    });
-        } catch (Exception e) {
-            log.error("Error extracting frame from video: {}", e.getMessage(), e);
-            return Flux.error(e);
-        }
+            log.info("Frame extracted successfully: {}", imagePath);
+            return Path.of(imagePath);
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
     private void deleteTempImage(String imagePath) {
