@@ -225,7 +225,7 @@ function App() {
                             <li> Analiza emocji i atrybutów (wiek, zarost, uczesanie itd.)</li>
                             <li> Detekcja liveness (czy osoba jest fizycznie obecna)</li>
                         </ul>
-
+npm
                                                <p><strong>Repozytorium projektu:</strong> <br />
                                                    <a href="https://github.com/..." target="_blank" rel="noreferrer">
                                 https://github.com/gkowalczyk/Face_Detector

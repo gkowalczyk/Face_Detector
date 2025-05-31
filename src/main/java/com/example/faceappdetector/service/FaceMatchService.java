@@ -36,10 +36,15 @@ public class FaceMatchService {
                         log.info("Matching tokens: " + token);
                     });
 
+                     if (matchingTokens.isEmpty()) {
+                        log.info("No matching faces found for the provided URL.");
+                        return Flux.empty();
+                    }
+
                     return faceRepository.findAll()
                             .filter(entity -> matchingTokens.contains(entity.getFaceToken()))
-                            .map(faceObjectMapper::toDto)
-                            .switchIfEmpty(Flux.error(new RuntimeException("No matching faces found in the database")));
+                            .map(faceObjectMapper::toDto);
+
                 })
                 .onErrorResume(ex -> {
                     ex.printStackTrace();
