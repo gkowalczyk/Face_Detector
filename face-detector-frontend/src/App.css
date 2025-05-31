@@ -9,6 +9,7 @@ body {
     padding: 2rem;
     text-align: center;
     margin: 0 auto;
+
 }
 
 .title {
@@ -162,6 +163,7 @@ body {
     display: flex;
     flex-direction: column;
     padding-bottom: 1rem;
+    padding-right: 2rem;
     overflow-y: auto;
 }
 

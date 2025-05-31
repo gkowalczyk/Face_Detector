@@ -1,9 +1,7 @@
 package com.example.faceappdetector.service;
 
-import com.example.faceappdetector.client.FacePlusApiClient;
 import com.example.faceappdetector.client.ImgBBClient;
 import com.example.faceappdetector.dto.FaceObject;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,6 @@ import java.time.temporal.ChronoField;
 @RequiredArgsConstructor
 public class VideoFrameExtractor {
 
-    private final FacePlusApiClient facePlusApiClient;
     private final FaceMatchService faceMatchService;
     private final ImgBBClient imgBBClient;
 

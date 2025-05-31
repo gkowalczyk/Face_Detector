@@ -6,6 +6,7 @@ import com.example.faceappdetector.response.VideoAttributeResponseDto;
 import com.example.faceappdetector.service.VideoFrameExtractor;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -91,6 +92,7 @@ public class AzureVideoIndexClient {
                                         return videoFrameExtractor.extractFrames(videoUrl, start, end);
                                     });
                 })
+                .doOnNext(faceObject -> log.info("Detected face: {}", faceObject))
                 .onErrorResume(e -> {
                     log.error("Error retrieving face video id data: {}", e.getMessage(), e);
                     return Flux.empty();

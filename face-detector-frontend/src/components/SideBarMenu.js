@@ -7,8 +7,8 @@ const SideBarMenu = ({ onMenuItemClick }) => {
             <ul>
                 <li onClick={() => onMenuItemClick("analyze")}>🧠 Analiza twarzy</li>
                 <li onClick={() => onMenuItemClick("filter")}>🔍 Znajdź w bazie</li>
-                <li onClick={() => onMenuItemClick("verify")}>👤 Weryfikacja tożsamości</li>
-                <li onClick={() => onMenuItemClick("analyze-video")}>🧠  Weryfikacja tożsamości z video</li>
+                <li onClick={() => onMenuItemClick("verify")}>👤 Weryfikacja tożsamości ze zdjęcia </li>
+                <li onClick={() => onMenuItemClick("analyze-video")}>🎥 Weryfikacja tożsamości z video </li>
                 <li onClick={() => onMenuItemClick("about")}>ℹ️ O aplikacji</li>
 
             </ul>

@@ -4,6 +4,7 @@ import FaceAppForm from "./components/FaceAppForm";
 import FaceImagePreview from "./components/FaceImagePreview";
 import SideBarMenu from "./components/SideBarMenu";
 import FaceFilterForm from "./components/FaceFilterForm";
+import VideoUploadForm from "./components/VideoUploadForm";
 
 import "./App.css"
 
@@ -13,12 +14,14 @@ function App() {
     const [view, setView] = useState("analyze");
     const [filterData, setFilterData] = useState([]);
     const [matchedData, setMatchedData] = useState([]);
+    const [videoFaces, setVideoFaces] = useState([]);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
 
     const handleImageSubmit = async (url) => {
         try {
             setImageUrl(url)
             const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face", {
-             //   const response = await fetch("http://localhost:8081/api/face", {
+              //  const response = await fetch("http://localhost:8081/api/face", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -59,7 +62,7 @@ function App() {
         try {
             setImageUrl(url);
              const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/getSimilar", {
-            //const response = await fetch("http://localhost:8081/api/face/getSimilar", {
+           // const response = await fetch("http://localhost:8081/api/face/getSimilar", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -72,6 +75,29 @@ function App() {
             console.error("Błąd pobierania danych:", error);
         }
     }
+
+    const startVideoAnalysis = (videoId) => {
+        setIsAnalyzing(true);
+
+        const poll = setInterval(async () => {
+            try {
+                //const response = await fetch(`http://localhost:8081/api/video/callback?id=${videoId}&state=Processed`, {
+                  const response = await fetch(`https://facedetector-production-71e7.up.railway.app/api/video/callback?id=${videoId}&state=Processed`, {
+                    method: "POST"
+                });
+                const data = await response.json();
+                const isDifferent = JSON.stringify(data) !== JSON.stringify(videoFaces);
+                if(data.length > 0 && isDifferent) {
+                    clearInterval(poll);
+                    setIsAnalyzing(false);
+                    setVideoFaces(data);
+                }
+            } catch (error) {
+                console.error("Polling error:", error);
+            }
+        }, 10000);
+    };
+
 
 
     return (
@@ -130,6 +156,20 @@ function App() {
                     </>
                 )}
 
+                {view === "analyze-video" && (
+                 <>
+                 <VideoUploadForm onStart={startVideoAnalysis}/>
+                 {isAnalyzing && <p style={{ color: "white" }}>⌛ Trwa analiza wideo...</p>}
+                 {videoFaces.map((face, index) => (
+                        <div key={index} className="content-wrapper">
+                            <FaceImagePreview imageUrl={face.url} faceData={face}/>
+                            <FaceResult faceData={face} view={"analyze"} />
+                        </div>
+                 ))}
+                 </>
+                )}
+
+
                 {view === "about" && (
                     <div className="hud-panel">
                         <h2>O AUTORZE</h2>
@@ -148,12 +188,35 @@ function App() {
                             <li>Wizualizacja cech: wiek, emocje, zarost, okulary, makijaż</li>
                             <li>Filtrowanie twarzy z bazy danych</li>
                             <li>Weryfikacja tożsamości – porównywanie twarzy</li>
+                            <li>Analiza wideo z URL – rozpoznawanie twarzy w filmach</li>
                             <li>Zapis dopasowań do bazy danych (MongoDB)</li>
                         </ul>
 
+                        <h4>📼 Analiza wideo z URL</h4>
+                        <p>
+                            Aplikacja obsługuje analizę twarzy w przesłanych filmach poprzez integrację z usługą  Azure AI Video Indexer.
+                            Wideo może zostać przesłane przez bezpośredni link (np. do pliku .mp4), a po
+                            zakończeniu indeksowania aplikacja pobiera fragmenty zawierające wykryte twarze.
+                        </p>
+
+                        <h4>⚙️ Wymagania techniczne dla analizy wideo</h4>
+                        <ul>
+                            <li><strong>Maksymalny rozmiar wideo z URL:</strong> 30 GB</li>
+                            <li><strong>Maksymalna długość filmu:</strong> 6 godzin</li>
+                            <li><strong>Minimalna długość filmu:</strong> powyżej 2 sekund</li>
+                            <li><strong>Obsługiwane formaty:</strong> MP4, AVI, MOV, MKV, WMV, FLV, TS, itp.</li>
+                            <li><strong>Obsługiwane kodeki wideo:</strong> H.264 (AVC), MPEG-2, HEVC (H.265), WMV9, Theora, itp.</li>
+                            <li><strong>Obsługiwane kodeki audio:</strong> AAC, MP3, FLAC, WAV, WMA, itp.</li>
+                            <li><strong>Limit OCR:</strong> do 50 000 słów na wideo</li>
+                        </ul>
+
+                        <p>
+                            Podczas przesyłania plików należy upewnić się, że link wskazuje bezpośrednio na plik wideo, a nie na stronę typu YouTube.
+                        </p>
+
                         <h4>💡 Oparte na technologii Azure AI Face</h4>
                         <p>
-                            Aplikacja wykorzystuje Azure AI Face Service, która to dostarcza algorytmy do wykrywania, rozpoznawania i analizowania ludzkich twarzy w obrazach. Przykładowe scenariusze użycia to:
+                            Aplikacja wykorzystuje Azure AI Face Service, która dostarcza algorytmy do wykrywania, rozpoznawania i analizowania ludzkich twarzy w obrazach.
                         </p>
                         <ul>
                             <li> Weryfikacja tożsamości użytkownika (one-to-one)</li>
