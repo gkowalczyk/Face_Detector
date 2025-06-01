@@ -122,25 +122,36 @@ Nested objects:
 5. Extracted images are analyzed and saved as `FaceObject` entries
 
 ---
-
 ## 🎞️ Demo Recordings
 
 ### 🔹 Face Analysis
-<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/analiza_twarzy.mp4" controls width="600"></video>
+[![Face Analysis](https://i9.ytimg.com/vi_webp/vEh9HgCYQuI/mq1.webp?sqp=CJT_8MEG-oaymwEmCMACELQB8quKqQMa8AEB-AHSBoAC4AOKAgwIABABGBogZShiMA8=&rs=AOn4CLCDLs0k75_ZBAZF7PI969BDBbAnQg)](https://youtu.be/vEh9HgCYQuI)
+> Demonstrates how the application analyzes facial features such as age, gender, smile, glasses, emotions and more from a single image URL.
+
+---
 
 ### 🔹 Filtering Faces
-<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/filtrowanie_twarzy.mp4" controls width="600"></video>
+[![Filtering Faces](https://i9.ytimg.com/vi_webp/eufo8OAgibE/mq2.webp?sqp=CJT_8MEG-oaymwEmCMACELQB8quKqQMa8AEB-AHSBoAC4AOKAgwIABABGCwgXihyMA8=&rs=AOn4CLAo_6n_AxOOnKo278kIIZjdGDeUDw)](https://youtu.be/eufo8OAgibE)
+> Shows how users can filter stored face records using dynamic criteria (e.g., smile > 0.5, gender: female, has glasses).
+
+---
 
 ### 🔹 Video Analysis
-<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/analiza%20z%20video.mp4" controls width="600"></video>
+[![Video Analysis](https://i9.ytimg.com/vi_webp/OpOyM0xBYAI/mq3.webp?sqp=CJT_8MEG-oaymwEmCMACELQB8quKqQMa8AEB-AHSBoAC4AOKAgwIABABGCYgZShjMA8=&rs=AOn4CLBGvZnKmcvhnDEkOPTl9k58-rHX3w)](https://youtu.be/OpOyM0xBYAI)
+> Upload a video URL and see how the app uses Azure Video Indexer to detect faces and extract frames for analysis.
+
+---
 
 ### 🔹 Identity Verification
-<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/weryfikacja_to%C5%BCsamosci.mp4" controls width="600"></video>
+[![Identity Verification](https://i9.ytimg.com/vi_webp/PYFr8JFtfU4/mq3.webp?sqp=CMCB8cEG-oaymwEmCMACELQB8quKqQMa8AEB-AHSBoAC4AOKAgwIABABGCIgZShjMA8=&rs=AOn4CLBJWFErwrWhKM-lPPMTOcbTCqdPhA)](https://youtu.be/PYFr8JFtfU4)
+> Demonstrates face comparison functionality – how a new image is matched against stored individuals in the database.
+
 ---
 
 ## 🧩 Design Patterns Used
 
 - **Adapter Pattern** – combines and normalizes results from Azure and Face++ APIs
+- **SOLID
 - **Builder Pattern** – for constructing filtering requests 
 - **Reactive Programming** – uses `Mono` and `Flux` (Spring WebFlux)
 
@@ -317,25 +328,36 @@ Obiekty zagnieżdżone:
 5. Obrazy są analizowane i zapisywane jako obiekty `FaceObject`
 
 ---
-
 ## 🎞️ Nagrania demo
 
-### 🔹 Face Analysis
-<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/analiza_twarzy.mp4" controls width="600"></video>
+### 🔹 Analiza twarzy
+[![Face Analysis](https://i9.ytimg.com/vi_webp/vEh9HgCYQuI/mq1.webp?sqp=CJT_8MEG-oaymwEmCMACELQB8quKqQMa8AEB-AHSBoAC4AOKAgwIABABGBogZShiMA8=&rs=AOn4CLCDLs0k75_ZBAZF7PI969BDBbAnQg)](https://youtu.be/vEh9HgCYQuI)
+> Pokazuje, jak aplikacja analizuje cechy twarzy: wiek, płeć, uśmiech, okulary, emocje i inne — na podstawie podanego URL do zdjęcia.
 
-### 🔹 Filtering Faces
-<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/filtrowanie_twarzy.mp4" controls width="600"></video>
+---
 
-### 🔹 Video Analysis
-<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/analiza%20z%20video.mp4" controls width="600"></video>
+### 🔹 Filtrowanie twarzy
+[![Filtering Faces](https://i9.ytimg.com/vi_webp/eufo8OAgibE/mq2.webp?sqp=CJT_8MEG-oaymwEmCMACELQB8quKqQMa8AEB-AHSBoAC4AOKAgwIABABGCwgXihyMA8=&rs=AOn4CLAo_6n_AxOOnKo278kIIZjdGDeUDw)](https://youtu.be/eufo8OAgibE)
+> Przedstawia dynamiczne filtrowanie twarzy zapisanych w bazie danych według atrybutów (np. uśmiech > 0.5, płeć: kobieta, okulary: tak).
 
-### 🔹 Identity Verification
-<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/weryfikacja_to%C5%BCsamosci.mp4" controls width="600"></video>
+---
+
+### 🔹 Analiza z wideo
+[![Video Analysis](https://i9.ytimg.com/vi_webp/OpOyM0xBYAI/mq3.webp?sqp=CJT_8MEG-oaymwEmCMACELQB8quKqQMa8AEB-AHSBoAC4AOKAgwIABABGCYgZShjMA8=&rs=AOn4CLBGvZnKmcvhnDEkOPTl9k58-rHX3w)](https://youtu.be/OpOyM0xBYAI)
+> Pokazuje analizę wideo – przesyłanie pliku przez URL, detekcja twarzy za pomocą Azure Video Indexer oraz wycinanie klatek i ich analiza.
+
+---
+
+### 🔹 Weryfikacja tożsamości
+[![Identity Verification](https://i9.ytimg.com/vi_webp/PYFr8JFtfU4/mq3.webp?sqp=CMCB8cEG-oaymwEmCMACELQB8quKqQMa8AEB-AHSBoAC4AOKAgwIABABGCIgZShjMA8=&rs=AOn4CLBJWFErwrWhKM-lPPMTOcbTCqdPhA)](https://youtu.be/PYFr8JFtfU4)
+> Demonstruje funkcję porównywania twarzy – jak nowe zdjęcie jest dopasowywane do twarzy już zapisanych w bazie.
+
 ---
 
 ## 🧩 Zastosowane wzorce projektowe
 
 - **Wzorzec adaptera (Adapter)** – łączy dane z API Azure i Face++ w spójną strukturę
+- **SOLID
 - **Wzorzec budowniczego (Builder)** – do budowy obiektów filtrujących
 - **Programowanie reaktywne** – użycie `Mono` i `Flux` (Spring WebFlux)
 
