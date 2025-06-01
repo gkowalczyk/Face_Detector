@@ -125,11 +125,17 @@ Nested objects:
 
 ## 🎞️ Demo Recordings
 
-- 🎥 [Face Analysis](https://github.com/gkowalczyk/Face_Detector/blob/main/src/main/resources/analiza_twarzy.mp4)
-- 🎥 [Filtering Faces](https://github.com/gkowalczyk/Face_Detector/blob/main/src/main/resources/filtrowanie_twarzy.mp4)
-- 🎥 [Video Analysis](https://github.com/gkowalczyk/Face_Detector/blob/main/src/main/resources/analiza%20z%20video.mp4)
-- 🎥 [Identity Verification](https://github.com/gkowalczyk/Face_Detector/blob/main/src/main/resources/weryfikacja_to%C5%BCsamosci.mp4)
+### 🔹 Face Analysis
+<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/analiza_twarzy.mp4" controls width="600"></video>
 
+### 🔹 Filtering Faces
+<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/filtrowanie_twarzy.mp4" controls width="600"></video>
+
+### 🔹 Video Analysis
+<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/analiza%20z%20video.mp4" controls width="600"></video>
+
+### 🔹 Identity Verification
+<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/weryfikacja_to%C5%BCsamosci.mp4" controls width="600"></video>
 ---
 
 ## 🧩 Design Patterns Used
@@ -185,3 +191,171 @@ Planned and potential enhancements include:
 
 - 📎 **Integration with External Databases (e.g., Interpol)**  
   Match detected faces against global datasets via standardized APIs.
+
+
+# 🧠 Aplikacja do analizy twarzy
+
+Futurystyczna aplikacja full-stack analizująca cechy twarzy z wykorzystaniem **Azure Face API** oraz **Face++**.  
+Zbudowana z użyciem **frontendu w React**, **backendu w Spring Boot** oraz bazy danych **MongoDB Atlas**.
+
+🌐 **Demo online:** [https://face-detector-app.netlify.app/](https://face-detector-app.netlify.app/)
+
+---
+
+## 📸 Funkcje
+
+- Wprowadzenie adresu URL zdjęcia i analiza atrybutów twarzy
+- Wykrywane cechy obejmują:
+  - ✅ Wiek, płeć, uśmiech
+  - ✅ Okulary, zarost, makijaż
+  - ✅ Kolor włosów, łysienie, widoczność włosów
+  - ✅ Rozmycie, ekspozycja, szumy, jakość rozpoznania
+- Podgląd twarzy na canvasie z ramką
+- Filtrowanie twarzy na podstawie wybranych atrybutów
+- Architektura full-stack:
+  - **Frontend:** React
+  - **Backend:** Spring Boot
+  - **API:** Azure Face API + Face++
+  - **Baza danych:** MongoDB Atlas
+
+---
+
+## 🧪 Praktyczne zastosowania
+
+- 🔍 **Wyszukiwanie osób i kryminalistyka**  
+  Identyfikacja nieznanych lub poszukiwanych osób na podstawie analizy twarzy i dopasowania do bazy.
+
+- 🎥 **Analiza scen wideo**  
+  Wysyłanie wideo, wyodrębnianie klatek na podstawie czasów wykrycia twarzy i analiza cech.
+
+- 🧪 **Badania psychologiczne lub marketingowe**  
+  Analiza mimiki w celu oceny zaangażowania, zadowolenia lub zmęczenia.
+
+- 🛂 **Kontrola dostępu i weryfikacja tożsamości**  
+  Analiza cech twarzy w celu wspomagania systemów bezpieczeństwa.
+
+---
+
+## 📈 Wyniki testów wydajnościowych (Gatling)
+
+**`/api/face/filter`**
+- 50 równoległych żądań
+- 100% sukcesu
+- Średni czas: 503 ms
+- Maksymalny czas: 767 ms  
+  👉 [Zobacz raport](src/test/java/simulations/index_filter.html)
+
+**`/api/face`**
+- 50 równoległych żądań
+- 100% sukcesu
+- Średni czas: ~1300–1400 ms
+- Maksymalny czas: 2946 ms  
+  👉 [Zobacz raport](src/test/java/simulations/index_analyzeByUrl.html)
+
+---
+
+## 🧩 Architektura systemu i przetwarzanie
+
+### 🔹 Przegląd ogólny
+
+- Cel: analiza, porównanie, filtrowanie i zapisywanie danych twarzy. Wykrywanie twarzy na zdjęciach i filmach przy użyciu zewnętrznych API.
+- Technologie: React, Spring Boot, MongoDB Atlas, Azure Face API, Face++, FFmpeg
+
+### 🔹 Dokumentacja API
+
+- Swagger UI: [Zobacz tutaj](https://facedetector-production-71e7.up.railway.app/webjars/swagger-ui/index.html)
+
+---
+
+## 🧬 Mapowanie danych (DTO Java)
+
+### Klasa: `FaceObject`
+
+| Klucz JSON      | Pole           | Typ            | Opis                                       |
+|----------------|----------------|----------------|--------------------------------------------|
+| face_token     | faceToken      | String         | Unikalny identyfikator twarzy              |
+| url            | url            | String         | URL źródła zdjęcia                         |
+| faceRectangle  | faceRectangle  | FaceRectangle  | Ramka ograniczająca twarz                  |
+| faceLandmarks  | faceLandmarks  | FaceLandmarks  | Punkty charakterystyczne (oczy, nos, usta) |
+| faceAttributes | faceAttributes | FaceAttributes | Wykryte cechy twarzy                       |
+
+### Klasa: `FaceAttributes`
+
+Zawiera m.in. pola:
+- `smile`, `age`, `gender`
+- `facialHair`, `glasses`, `makeup`
+- `blur`, `exposure`, `noise`
+- `occlusion`, `hair`, `emotion`, `beauty`, `skinStatus`
+
+Obiekty zagnieżdżone:
+- `HeadPose`, `FacialHair`, `Blur`, `Exposure`, `Noise`, `Hair`, `Emotion`, `Makeup`, `Occlusion`, `SkinStatus`, `Beauty`
+
+---
+
+## 🔍 Filtrowanie twarzy
+
+- Endpoint `/api/face/filter` przyjmuje obiekt `FaceAttributeRequestDto`
+- Serwer porównuje atrybuty z zapisanymi w bazie danych
+- Zwraca strumień `Flux<FaceObject>` spełniający kryteria filtrujące
+
+---
+
+## 🧠 Dopasowanie twarzy ze zdjęcia
+
+- Metoda `getSimilarFaces(ImgUrl)` wysyła zapytanie do Face++
+- Zwracane są identyfikatory podobnych twarzy (`faceToken`)
+- Serwis dopasowuje je do danych w bazie i zwraca `Flux<FaceObject>`
+
+---
+
+## 🎥 Wykrywanie twarzy z wideo
+
+1. Wideo jest przesyłane do Azure przez `uploadVideo(...)` (`AzureVideoIndexClient`)
+2. Po zakończeniu indeksowania, wywoływana jest metoda `analyzeVideo(...)`
+3. Otrzymywane są czasy wystąpienia twarzy
+4. `VideoFrameExtractor` używa FFmpeg do wycięcia odpowiednich klatek
+5. Obrazy są analizowane i zapisywane jako obiekty `FaceObject`
+
+---
+
+## 🎞️ Nagrania demo
+
+### 🔹 Face Analysis
+<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/analiza_twarzy.mp4" controls width="600"></video>
+
+### 🔹 Filtering Faces
+<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/filtrowanie_twarzy.mp4" controls width="600"></video>
+
+### 🔹 Video Analysis
+<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/analiza%20z%20video.mp4" controls width="600"></video>
+
+### 🔹 Identity Verification
+<video src="https://github.com/gkowalczyk/Face_Detector/raw/main/src/main/resources/weryfikacja_to%C5%BCsamosci.mp4" controls width="600"></video>
+---
+
+## 🧩 Zastosowane wzorce projektowe
+
+- **Wzorzec adaptera (Adapter)** – łączy dane z API Azure i Face++ w spójną strukturę
+- **Wzorzec budowniczego (Builder)** – do budowy obiektów filtrujących
+- **Programowanie reaktywne** – użycie `Mono` i `Flux` (Spring WebFlux)
+
+---
+
+## 🚀 Plany rozwoju i potencjał komercyjny
+
+Planowane i możliwe do wdrożenia rozszerzenia:
+
+- 📊 **Eksport raportów do PDF**
+- 🔐 **Logowanie i rejestracja użytkowników z podziałem na role**
+- 🎞️ **Interfejs do przeglądania filmów, klatek i wykrytych twarzy**
+- 🧑‍💼 **Baza osób poszukiwanych i możliwość porównania twarzy z rekordami**
+- 📝 **Dodawanie danych personalnych do analizowanych twarzy**
+- 📂 **Historia analiz i logi aktywności użytkowników**
+- 📶 **Obsługa strumieni RTSP (kamery IP)**
+- 🌐 **Wielojęzyczny interfejs (np. angielski/polski)**
+- 📡 **WebSocket – powiadomienia w czasie rzeczywistym**
+- 🧠 **Integracja z AI (np. GPT/LLM) do interpretacji wyników**
+- 🧪 **Tryb wsadowy – analiza wielu plików naraz**
+- 📊 **Dashboard z analizami statystycznymi (np. najczęstszy wiek)**
+- 🔒 **Autoryzacja tokenami API**
+- 📎 **Integracja z zewnętrznymi bazami danych (np. Interpol)**
