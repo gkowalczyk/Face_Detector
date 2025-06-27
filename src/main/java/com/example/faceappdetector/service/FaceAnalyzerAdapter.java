@@ -2,6 +2,7 @@ package com.example.faceappdetector.service;
 
 import com.example.faceappdetector.client.FaceApiClient;
 import com.example.faceappdetector.client.FacePlusApiClient;
+import com.example.faceappdetector.controller.FaceApiController;
 import com.example.faceappdetector.dto.FaceObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

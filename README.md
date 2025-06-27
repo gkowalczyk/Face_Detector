@@ -151,7 +151,7 @@ Nested objects:
 ## 🧩 Design Patterns Used
 
 - **Adapter Pattern** – combines and normalizes results from Azure and Face++ APIs
-- **SOLID
+- **SOLID**
 - **Builder Pattern** – for constructing filtering requests 
 - **Reactive Programming** – uses `Mono` and `Flux` (Spring WebFlux)
 
@@ -357,7 +357,7 @@ Obiekty zagnieżdżone:
 ## 🧩 Zastosowane wzorce projektowe
 
 - **Wzorzec adaptera (Adapter)** – łączy dane z API Azure i Face++ w spójną strukturę
-- **SOLID
+- **SOLID**
 - **Wzorzec budowniczego (Builder)** – do budowy obiektów filtrujących
 - **Programowanie reaktywne** – użycie `Mono` i `Flux` (Spring WebFlux)
 

@@ -5,7 +5,6 @@ import FaceImagePreview from "./components/FaceImagePreview";
 import SideBarMenu from "./components/SideBarMenu";
 import FaceFilterForm from "./components/FaceFilterForm";
 import VideoUploadForm from "./components/VideoUploadForm";
-
 import "./App.css"
 
 function App() {
@@ -20,8 +19,10 @@ function App() {
     const handleImageSubmit = async (url) => {
         try {
             setImageUrl(url)
-            const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face", {
+           // const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face", {
               //  const response = await fetch("http://localhost:8081/api/face", {
+            const response = await fetch("https://face-detector-app.site/api/face", {
+
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -40,7 +41,9 @@ function App() {
 
         try {
             //const response = await fetch("http://localhost:8081/api/face/filter", {
-            const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/filter", {
+           // const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/filter", {
+                const response = await fetch("https://face-detector-app.site/api/face/filter", {
+
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -61,8 +64,10 @@ function App() {
     const handleMachSubmit = async (url) => {
         try {
             setImageUrl(url);
-             const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/getSimilar", {
+            // const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/getSimilar", {
            // const response = await fetch("http://localhost:8081/api/face/getSimilar", {
+                 const response = await fetch("https://face-detector-app.site/api/face/getSimilar", {
+
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -82,7 +87,9 @@ function App() {
         const poll = setInterval(async () => {
             try {
                 //const response = await fetch(`http://localhost:8081/api/video/callback?id=${videoId}&state=Processed`, {
-                  const response = await fetch(`https://facedetector-production-71e7.up.railway.app/api/video/callback?id=${videoId}&state=Processed`, {
+                 // const response = await fetch(`https://facedetector-production-71e7.up.railway.app/api/video/callback?id=${videoId}&state=Processed`, {
+                      const response = await fetch(` https://face-detector-app.site/api/video/callback?id=${videoId}&state=Processed`, {
+
                     method: "POST"
                 });
                 const data = await response.json();
@@ -101,6 +108,7 @@ function App() {
 
 
     return (
+
         <div className="app-with-sidebar" style={{display: "flex"}}>
             <div className="sidebar-container">
                 <SideBarMenu onMenuItemClick={setView}/>
@@ -252,6 +260,7 @@ npm
                     </div>
                 )}
             </div>
+
         </div>
     );
 }
