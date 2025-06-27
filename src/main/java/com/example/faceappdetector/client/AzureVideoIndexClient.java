@@ -35,7 +35,6 @@ public class AzureVideoIndexClient {
     private final VideoFrameExtractor videoFrameExtractor;
     private final Map<String, String> videoFrameCache = new ConcurrentHashMap<>();
 
-
     public Mono<VideoAttributeResponseDto> uploadVideo(String url,
                                                        String name,
                                                        String description) {
