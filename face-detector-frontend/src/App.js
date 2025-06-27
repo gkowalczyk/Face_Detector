@@ -88,7 +88,7 @@ function App() {
             try {
                 //const response = await fetch(`http://localhost:8081/api/video/callback?id=${videoId}&state=Processed`, {
                  // const response = await fetch(`https://facedetector-production-71e7.up.railway.app/api/video/callback?id=${videoId}&state=Processed`, {
-                      const response = await fetch(` https://face-detector-app.site/api/video/callback?id=${videoId}&state=Processed`, {
+                      const response = await fetch(`https://face-detector-app.site/api/video/callback?id=${videoId}&state=Processed`, {
 
                     method: "POST"
                 });
