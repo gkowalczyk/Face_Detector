@@ -10,7 +10,7 @@ const VideoUploadForm = ({onStart}) => {
 
         try {
             //const response = await fetch('http://localhost:8081/api/video/add?videoUrl=' + encodeURIComponent(videoUrl), {
-                const response = await fetch('https://facedetector-production-71e7.up.railway.app/api/video/add?videoUrl='  + encodeURIComponent(videoUrl), {
+                const response = await fetch('https://face-detector-app.site/api/video/add?videoUrl='  + encodeURIComponent(videoUrl), {
                 method: 'POST'
             });
             const data = await response.json();
