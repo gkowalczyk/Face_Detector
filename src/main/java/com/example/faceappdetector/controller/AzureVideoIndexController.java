@@ -34,8 +34,6 @@ public class AzureVideoIndexController {
         }
         return ResponseEntity.ok(Flux.empty());
     }
-
-
 }
 
 

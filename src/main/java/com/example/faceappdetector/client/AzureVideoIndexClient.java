@@ -29,7 +29,8 @@ public class AzureVideoIndexClient {
     private final String azureIndexerUrl = "https://api.videoindexer.ai/eastus/Accounts";
     @Value("${azure.video.account-id}")
     private String accountId;
-    private final String callbackUrl = "https://face-detector-app.site/api/video/callback";
+    private final String callbackUrl = "https://face-detector-app.site/api/video/callback?id={VideoId}&state={State}";
+
     private final AzureAuthVideoIndexClient azureAuthVideoIndexClient;
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final VideoFrameExtractor videoFrameExtractor;
