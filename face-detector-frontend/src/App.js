@@ -21,7 +21,7 @@ function App() {
             setImageUrl(url)
            // const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face", {
               //  const response = await fetch("http://localhost:8081/api/face", {
-            const response = await fetch("https://face-detector-app.site/api/face", {
+            const response = await fetch("https://face-detector.gkowalczyk-dev-app.site/api/face", {
 
                 method: "POST",
                 headers: {
@@ -42,7 +42,7 @@ function App() {
         try {
             //const response = await fetch("http://localhost:8081/api/face/filter", {
            // const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/filter", {
-                const response = await fetch("https://face-detector-app.site/api/face/filter", {
+                const response = await fetch("https://face-detector.gkowalczyk-dev-app.site/api/face/filter", {
 
                 method: "POST",
                 headers: {
@@ -66,7 +66,7 @@ function App() {
             setImageUrl(url);
             // const response = await fetch("https://facedetector-production-71e7.up.railway.app/api/face/getSimilar", {
            // const response = await fetch("http://localhost:8081/api/face/getSimilar", {
-                 const response = await fetch("https://face-detector-app.site/api/face/getSimilar", {
+                 const response = await fetch("https://face-detector.gkowalczyk-dev-app.site/api/face/getSimilar", {
 
                 method: "POST",
                 headers: {
@@ -88,7 +88,7 @@ function App() {
             try {
                 //const response = await fetch(`http://localhost:8081/api/video/callback?id=${videoId}&state=Processed`, {
                  // const response = await fetch(`https://facedetector-production-71e7.up.railway.app/api/video/callback?id=${videoId}&state=Processed`, {
-                      const response = await fetch(`https://face-detector-app.site/api/video/callback?id=${videoId}&state=Processed`, {
+                      const response = await fetch(`https://face-detector.gkowalczyk-dev-app.site/api/video/callback?id=${videoId}&state=Processed`, {
 
                     method: "POST"
                 });
